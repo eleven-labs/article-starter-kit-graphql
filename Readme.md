@@ -2,7 +2,16 @@
 
 ## Setup
 
-```sh
+#### Copy .env.dist
+
+You have to prepare your environment variables file (`.env`) from the dist file:
+
+```bash
+$ cp .env.dist .env
+```
+
+```bash
+$ export `cat .env`
 $ yarn
 ```
 
@@ -10,12 +19,12 @@ $ yarn
 
 To production
 
-```sh
+```bash
 $ yarn start
 ```
 
 or development
 
-```sh
+```bash
 $ yarn start:dev
 ```
