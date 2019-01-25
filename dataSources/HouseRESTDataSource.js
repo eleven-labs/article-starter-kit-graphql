@@ -1,4 +1,4 @@
-const { RESTDataSource } = require("apollo-datasource-rest");
+const { RESTDataSource } = require("../dataLayers/rest");
 
 class HouseRESTDataSource extends RESTDataSource {
     get baseURL() {

@@ -1,5 +1,5 @@
 const { compact } = require("lodash");
-const { RESTDataSource } = require("apollo-datasource-rest")
+const { RESTDataSource } = require("../dataLayers/rest");
 
 class CharacterRESTDataSource extends RESTDataSource {
     get baseURL() {

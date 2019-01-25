@@ -1,5 +1,6 @@
 const { ApolloServer, ApolloError } = require("apollo-server");
 const GraphQLHelper = require("./helpers/graphql");
+const { RestExtension } = require("./dataLayers/rest");
 
 const port = process.env.PORT || 4000;
 const server = new ApolloServer({
@@ -22,7 +23,8 @@ const server = new ApolloServer({
     return {
       ENDPOINT_GOT_API
     };
-  }
+  },
+  extensions: [() => new RestExtension()],
 });
 
 server.listen({ port }).then(({ url }) => {
