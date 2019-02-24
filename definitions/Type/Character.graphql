@@ -1,10 +1,9 @@
 type Character {
-  key: ID!
+  id: ID!
   name: String!
   imageUrl: String
   father: Character
   mother: Character
   spouse: Character
   childrens: [Character]
-  house: House
 }

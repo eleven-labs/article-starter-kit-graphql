@@ -4,7 +4,5 @@ type Query {
 
 extend type Query {
   characters: [Character]
-  character(key: ID!): Character
-  houses: [House]
-  house(key: ID!): House
+  character(id: ID!): Character
 }

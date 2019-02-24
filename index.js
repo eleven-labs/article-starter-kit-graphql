@@ -1,8 +1,10 @@
 const { ApolloServer, ApolloError } = require("apollo-server");
 const GraphQLHelper = require("./helpers/graphql");
-const { RestExtension } = require("./dataLayers/rest");
+
+const { SQLExtension, Database, ModelFactory } = require("./dataLayers/sql");
 
 const port = process.env.PORT || 4000;
+
 const server = new ApolloServer({
   typeDefs: GraphQLHelper.typeDefs,
   schemaDirectives: GraphQLHelper.schemaDirectives,
@@ -18,13 +20,17 @@ const server = new ApolloServer({
       ENDPOINT_GOT_API = "https://game-of-throne-api.appspot.com/api";
     }
 
-    console.log("ENDPOINT_GOT_API", ENDPOINT_GOT_API);
-
     return {
-      ENDPOINT_GOT_API
+      ENDPOINT_GOT_API,
+      dataLayers: {
+        sql: {
+          Database,
+          ModelFactory: ModelFactory.setDatabase(Database)
+        }
+      }
     };
   },
-  extensions: [() => new RestExtension()],
+  extensions: [() => new SQLExtension()]
 });
 
 server.listen({ port }).then(({ url }) => {
