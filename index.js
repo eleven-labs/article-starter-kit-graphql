@@ -1,14 +1,21 @@
 const { ApolloServer, ApolloError } = require("apollo-server");
-const GraphQLHelper = require("./helpers/graphql");
+const { RedisCache } = require("apollo-server-cache-redis");
 
+const GraphQLHelper = require("./helpers/graphql");
 const { SQLExtension, Database, ModelFactory } = require("./dataLayers/sql");
 
 const port = process.env.PORT || 4000;
+
+const cache = new RedisCache({
+  host: process.env.REDIS_HOST || "redis"
+});
 
 const server = new ApolloServer({
   typeDefs: GraphQLHelper.typeDefs,
   schemaDirectives: GraphQLHelper.schemaDirectives,
   resolvers: GraphQLHelper.resolvers,
+  cache,
+  persistedQueries: { cache },
   dataSources: () => GraphQLHelper.dataSources,
   context: () => {
     let { ENDPOINT_GOT_API } = process.env;

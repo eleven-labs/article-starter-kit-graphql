@@ -1,6 +1,20 @@
 version: '3'
 
 services:
+  graphql:
+    image: node:8.10.0-alpine
+    depends_on:
+      - db
+      - redis
+    environment:
+      - PORT=8080
+    working_dir: /graphql
+    volumes:
+      - ./:/graphql
+    ports:
+      - 8080:8080
+    command: >
+      sh -c "yarn && yarn start"
   db:
     image: postgres:11-alpine
     environment:
@@ -15,3 +29,15 @@ services:
     - db
     ports:
     - 2000:8080
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - 2001:8081
